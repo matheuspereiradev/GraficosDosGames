@@ -23,7 +23,6 @@ public class Jogo extends Canvas implements Runnable {
 	}
 
 	public static void main(String[] args) {
-
 		Jogo jogo = new Jogo();
 	}
 
