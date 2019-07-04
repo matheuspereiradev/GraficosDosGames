@@ -22,6 +22,7 @@ public class Jogo extends Canvas implements Runnable {
 	private BufferedImage[] jogador;
 	private BufferedImage monstrinho;
 	private int framesJogador = 0, maxframesJogador = 20, curAnimation = 0, maxAnimationJogador=3;
+	private int fpsJogo=0;
 
 	private int x = 0, y = 0;
 
@@ -93,6 +94,8 @@ public class Jogo extends Canvas implements Runnable {
 		g.setFont(new Font("Arial", Font.BOLD, 20));
 		g.setColor(Color.BLACK);
 		g.drawString("Hello word", 40, 50);
+		g.setColor(Color.YELLOW);
+		g.drawString(String.valueOf(fpsJogo), 0, 20);
 
 		/* renderização do jogo */
 		Graphics2D g2 = (Graphics2D) g;
@@ -133,7 +136,7 @@ public class Jogo extends Canvas implements Runnable {
 			}
 
 			if (System.currentTimeMillis() - timer >= 1000) {
-				System.out.println("FPS=" + frames);
+				fpsJogo=frames;
 				frames = 0;
 				timer = System.currentTimeMillis();// atualiza o tempo para o tempo atual
 				// ou timer+=1000; para dizer que se passaram 1000 milesegundos desde o valor
