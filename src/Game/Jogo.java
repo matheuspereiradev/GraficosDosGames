@@ -6,8 +6,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-
-import javax.swing.GrayFilter;
 import javax.swing.JFrame;
 
 public class Jogo extends Canvas implements Runnable {
@@ -19,9 +17,9 @@ public class Jogo extends Canvas implements Runnable {
 	private BufferedImage background;
 
 	public Jogo() {
-		setPreferredSize(new Dimension(WIDITH * SCALE, HEIGHT * SCALE));
+		setPreferredSize(new Dimension(WIDITH * SCALE, HEIGHT * SCALE));//tamanho da janela
 		iniciarFrame();
-		background=new BufferedImage(WIDITH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+		background=new BufferedImage(WIDITH, HEIGHT, BufferedImage.TYPE_INT_RGB);//imagem do fundo
 	}
 
 	public static void main(String[] args) {
@@ -52,6 +50,12 @@ public class Jogo extends Canvas implements Runnable {
 		Graphics g=background.getGraphics();
 		g.setColor(new Color(255,40,40));
 		g.fillRect(0, 0, WIDITH ,HEIGHT);
+		
+		g.setColor(Color.CYAN);
+		g.fillRect(20, 20,80, 80);
+		
+		g.setColor(Color.GREEN);
+		g.fillOval(35, 25, 40, 40);
 		g=bs.getDrawGraphics();
 		g.drawImage(background, 0, 0, WIDITH*SCALE, HEIGHT*SCALE, null);
 		bs.show();
@@ -88,18 +92,24 @@ public class Jogo extends Canvas implements Runnable {
 			}
 
 		}
+		parar();
 
 	}
 
 	public synchronized void iniciar() {
 		thread = new Thread(this);
-		thread.start();
+		thread.start();//chama o run da thread
 		isRunning = true;
 
 	}
 
 	public synchronized void parar() {
-
+		isRunning =false;
+		try {
+			thread.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
