@@ -3,6 +3,7 @@ package Game;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -13,7 +14,7 @@ public class Jogo extends Canvas implements Runnable {
 	private Thread thread;
 	private boolean isRunning;
 	public static JFrame frame;
-	private final int WIDITH = 160, HEIGHT = 120, SCALE = 4;
+	private final int WIDITH = 240, HEIGHT = 160, SCALE = 2;
 	private BufferedImage background;
 
 	public Jogo() {
@@ -56,6 +57,11 @@ public class Jogo extends Canvas implements Runnable {
 		
 		g.setColor(Color.GREEN);
 		g.fillOval(35, 25, 40, 40);
+		
+		g.setFont(new Font("Arial", Font.BOLD,20 ));
+		g.setColor(Color.BLACK);
+		g.drawString("Hello word", 40, 50);
+		
 		g=bs.getDrawGraphics();
 		g.drawImage(background, 0, 0, WIDITH*SCALE, HEIGHT*SCALE, null);
 		bs.show();
