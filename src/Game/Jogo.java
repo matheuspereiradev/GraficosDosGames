@@ -16,8 +16,15 @@ public class Jogo extends Canvas implements Runnable {
 	public static JFrame frame;
 	private final int WIDITH = 240, HEIGHT = 160, SCALE = 2;
 	private BufferedImage background;
+	
+	private Spritesheet sheet;
+	private BufferedImage jogador;
+	
+	private int x=0;
 
 	public Jogo() {
+		sheet=new Spritesheet("/Spritesheet.png");
+		jogador=sheet.getSprite(0, 0, 16, 16);
 		setPreferredSize(new Dimension(WIDITH * SCALE, HEIGHT * SCALE));//tamanho da janela
 		iniciarFrame();
 		background=new BufferedImage(WIDITH, HEIGHT, BufferedImage.TYPE_INT_RGB);//imagem do fundo
@@ -39,7 +46,7 @@ public class Jogo extends Canvas implements Runnable {
 	}
 
 	public void atualizar() {
-		// System.out.println("Tick");
+		x++;
 	}
 
 	public void renderizar() {
@@ -62,6 +69,10 @@ public class Jogo extends Canvas implements Runnable {
 		g.setColor(Color.BLACK);
 		g.drawString("Hello word", 40, 50);
 		
+		g.drawImage(jogador, x, 25, null);
+		
+		
+		g.dispose();//limparr dados da imagem que nao foram usados
 		g=bs.getDrawGraphics();
 		g.drawImage(background, 0, 0, WIDITH*SCALE, HEIGHT*SCALE, null);
 		bs.show();
