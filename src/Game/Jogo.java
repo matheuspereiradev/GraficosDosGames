@@ -15,16 +15,18 @@ public class Jogo extends Canvas implements Runnable {
 	private Thread thread;
 	private boolean isRunning;
 	public static JFrame frame;
-	private final int WIDITH = 240, HEIGHT = 160, SCALE = 2;
+	private final int WIDITH = 240, HEIGHT = 160, SCALE = 3;
 	private BufferedImage background;
 
 	private Spritesheet sheet;
 	private BufferedImage[] jogador;
+	private BufferedImage[] jogadorDireita;
+	private BufferedImage[] jogadorSubindo;
 	private BufferedImage monstrinho;
-	private int framesJogador = 0, maxframesJogador = 20, curAnimation = 0, maxAnimationJogador=3;
+	private int framesJogador = 0, maxframesJogador = 10, curAnimation = 0, maxAnimationJogador=3;
 	private int fpsJogo=0;
 
-	private int x = 0, y = 0;
+	private int x = 0, y = 0, yInv = 0;
 
 	public Jogo() {
 		sheet = new Spritesheet("/Spritesheet.png");
@@ -32,7 +34,18 @@ public class Jogo extends Canvas implements Runnable {
 		jogador[0] = sheet.getSprite(0, 0, 16, 16);
 		jogador[1] = sheet.getSprite(16, 0, 16, 16);
 		jogador[2] = sheet.getSprite(32, 0, 16, 16);
-		monstrinho = sheet.getSprite(0, 16, 16, 16);
+		
+		jogadorDireita = new BufferedImage[3];
+		jogadorDireita[0]=sheet.getSprite(48, 0, 16, 16);
+		jogadorDireita[1]=sheet.getSprite(64, 0, 16, 16);
+		jogadorDireita[2]=sheet.getSprite(80, 0, 16, 16);
+		
+		jogadorSubindo=new BufferedImage[3];
+		jogadorSubindo[0]=sheet.getSprite(0, 16, 16, 16);
+		jogadorSubindo[1]=sheet.getSprite(16, 16, 16, 16);
+		jogadorSubindo[2]=sheet.getSprite(32, 16, 16, 16);
+		
+		monstrinho = sheet.getSprite(48, 16, 16, 16);
 		setPreferredSize(new Dimension(WIDITH * SCALE, HEIGHT * SCALE));// tamanho da janela
 		iniciarFrame();
 		background = new BufferedImage(WIDITH, HEIGHT, BufferedImage.TYPE_INT_RGB);// imagem do fundo
@@ -64,6 +77,11 @@ public class Jogo extends Canvas implements Runnable {
 		} else {
 			y++;
 		}
+		if (yInv <= 0) {
+			yInv = HEIGHT;
+		} else {
+			yInv--;
+		}
 
 		framesJogador++;
 		if (framesJogador >= maxframesJogador) {
@@ -85,15 +103,12 @@ public class Jogo extends Canvas implements Runnable {
 		g.setColor(new Color(63, 68, 152));
 		g.fillRect(0, 0, WIDITH, HEIGHT);
 
-		g.setColor(Color.CYAN);
-		g.fillRect(20, 20, 80, 80);
-
-		g.setColor(Color.GREEN);
+		g.setColor(Color.YELLOW);
 		g.fillOval(35, 25, 40, 40);
 
 		g.setFont(new Font("Arial", Font.BOLD, 20));
 		g.setColor(Color.BLACK);
-		g.drawString("Hello word", 40, 50);
+		g.drawString("The Prince's Journey", 30, 50);
 		g.setColor(Color.YELLOW);
 		g.drawString(String.valueOf(fpsJogo), 0, 20);
 
@@ -105,6 +120,8 @@ public class Jogo extends Canvas implements Runnable {
 		g.drawImage(monstrinho, x, 25, null);
 		g2.rotate(Math.toRadians(-180), x + 8, 25 + 8);
 		g.drawImage(jogador[curAnimation], 65, y, null);
+		g.drawImage(jogadorDireita[curAnimation], x-17, 60, null);
+		g.drawImage(jogadorSubindo[curAnimation], 82, yInv, null);
 
 		/**/
 
